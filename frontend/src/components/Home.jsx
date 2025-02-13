@@ -1,10 +1,17 @@
-import React from 'react'
-import LeftSidebar from './LeftSidebar'
+import React from 'react';
+import LeftSidebar from './LeftSidebar';
+import Feed from './Feed';
+import RightSidebar from './RightSidebar';
+import { Outlet } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div><LeftSidebar/></div>
-  )
-}
+    <div className="flex justify-between w-[88%] mx-auto">
+      <LeftSidebar />
+      <Outlet/>
+      <RightSidebar />
+    </div>
+  );
+};
 
-export default Home
+export default Home;
