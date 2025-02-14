@@ -2,7 +2,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/user.model.js';
 
-export const Register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
     if (!name || !username || !email || !password) {
@@ -41,7 +41,7 @@ export const Register = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -83,7 +83,7 @@ export const Login = async (req, res) => {
   }
 };
 
-export const Logout = async (req, res) => {
+export const logout = async (req, res) => {
   try {
     return res
       .status(200)
@@ -101,7 +101,7 @@ export const Logout = async (req, res) => {
   }
 };
 
-export const Bookmarks = async (req, res) => {
+export const bookmarks = async (req, res) => {
   try {
     const loginUserId = req.body.id;
     const tweetId = req.params.id;
@@ -125,6 +125,54 @@ export const Bookmarks = async (req, res) => {
         success: true,
       });
     }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id).select('-password');
+    if (!user) {
+      return res.status(401).json({
+        message: 'User Not Found.',
+        success: false,
+      });
+    }
+    return res.status(200).json({
+      user,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error.',
+      success: false,
+    });
+  }
+};
+
+export const getOthersUsers = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const otherUsers = await User.find({ _id: { $ne: id } }).select(
+      '-password'
+    );
+    if (!otherUsers) {
+      return res.status(401).json({
+        message: 'Current Not Have Any Users.',
+        success: false,
+      });
+    }
+    return res.status(200).json({
+      otherUsers,
+      success: true,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
