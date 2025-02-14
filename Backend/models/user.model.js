@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     username: {
-      type: String,  
+      type: String,
       required: true,
     },
     email: {
@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     following: {
+      type: Array,
+      default: [],
+    },
+    bookmarks: {
       type: Array,
       default: [],
     },

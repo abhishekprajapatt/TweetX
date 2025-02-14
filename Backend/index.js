@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDB from './database/db.js';
 import userRoute from './routes/user.route.js';
+import tweetRoute from './routes/tweet.route.js';
 
 dotenv.config({});
 connectDB();
@@ -23,6 +24,7 @@ app.use(
 );
 
 app.use('/api/v1/user', userRoute);
+app.use('/api/v1/tweet', tweetRoute);
 app.get("/home",(req, res) => {
   res.status(200).json({
     message:"TweetX Server hai ji",

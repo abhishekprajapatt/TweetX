@@ -1,20 +1,21 @@
-import { User } from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/user.model.js';
 
 export const Register = async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
     if (!name || !username || !email || !password) {
       return res.status(401).json({
-        message: 'All fields are requireds',
+        message: 'Somthing is missing!',
         success: false,
       });
     }
 
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (user) {
       return res.status(401).json({
-        message: 'User already exist.',
+        message: 'User already exist!',
         success: false,
       });
     }
@@ -28,7 +29,7 @@ export const Register = async (req, res) => {
     });
 
     return res.status(200).json({
-      message: 'Account Created Successfully.',
+      message: 'Account Created Successfully!',
       success: true,
     });
   } catch (error) {
@@ -40,35 +41,95 @@ export const Register = async (req, res) => {
   }
 };
 
-// export const Login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     if (!email || !password) {
-//       return res.status(400).json({
-//         message: 'Somthing is missing',
-//         success: false,
-//       });
-//     }
-//     const user = User.findOne({ email });
-//     if (!user) {
-//       return res.status(401).json({
-//         message: 'Incorrect Email.',
-//         success: false,
-//       });
-//     }
-//     const isPasswordMatch = await bcryptjs.compare(password, user.password);
-//     if (!isPasswordMatch) {
-//       return res.status(400).json({
-//         message: 'Incorrect Password.',
-//         success: false,
-//       });
-//     }
-//     generate
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       message: 'Server Error',
-//       success: false,
-//     });
-//   }
-// };
+export const Login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: 'Somthing is missing',
+        success: false,
+      });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({
+        message: 'Incorrect Email.',
+        success: false,
+      });
+    }
+    const isPasswordMatch = await bcryptjs.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(400).json({
+        message: 'Incorrect Password.',
+        success: false,
+      });
+    }
+    const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+      expiresIn: '1d',
+    });
+    return res
+      .status(201)
+      .cookie('token', token, { expiresIn: '1d', httpOnly: true })
+      .json({
+        message: 'Login Successfully',
+        success: true,
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+export const Logout = async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .cookie('token', '', { expiresIn: new Date(Date.now()) })
+      .json({
+        message: 'Logout Successfully',
+        success: true,
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+export const Bookmarks = async (req, res) => {
+  try {
+    const loginUserId = req.body.id;
+    const tweetId = req.params.id;
+    const user = await User.findById(loginUserId);
+    console.log(loginUserId);
+    if (user.bookmarks.includes(tweetId)) {
+      console.log(tweetId);
+      await User.findByIdAndUpdate(loginUserId, {
+        $pull: { bookmarks: tweetId },
+      });
+      return res.status(200).json({
+        message: 'Remove Bookmarks!',
+        success: true,
+      });
+    } else {
+      await User.findByIdAndUpdate(loginUserId, {
+        $push: { bookmarks: tweetId },
+      });
+      return res.status(200).json({
+        message: 'Save Bookmarks!',
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
