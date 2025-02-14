@@ -33,8 +33,8 @@ const LeftSidebar = () => {
           <button onClick={() => navigate(`/`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
             <BookHeart className="text-xl" /> Favorite
           </button>
-          <button className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
-            <LogOut onClick={() => navigate(`/`)} className="text-xl" /> Logout
+          <button onClick={() => navigate(`/login`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
+            <LogOut  className="text-xl" /> Logout
           </button>
           <button className="px-4 py-2 border-none text-md bg-blue-500 hover:bg-blue-400 rounded-full font-bold w-full text-white">Tweet</button>
         </div>
