@@ -10,9 +10,10 @@ const tweetSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    tweetId: {
+    userId: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
     },
     bookmarks: {
       type: Array,

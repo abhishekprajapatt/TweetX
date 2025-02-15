@@ -1,4 +1,5 @@
 import { Tweet } from '../models/tweet.model.js';
+import { User } from '../models/user.model.js';
 
 export const CreateTweet = async (req, res) => {
   try {
@@ -63,6 +64,62 @@ export const LikeOrDislike = async (req, res) => {
         success: true,
       });
     }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+export const getAllTweets = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const loggedInUser = await User.findById(id);
+    if (!loggedInUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const loggedInUserTweets = await Tweet.find({ userId: id });
+    const followingUserTweet =
+      loggedInUser.following.length > 0
+        ? await Promise.all(
+            loggedInUser.following.map((otherUsersId) => {
+              return Tweet.find({ userId: otherUsersId });
+            })
+          )
+        : [];
+    return res.status(200).json({
+      tweets: [...loggedInUserTweets, ...followingUserTweet.flat()],
+    });
+    // return res.status(200).json({
+    //   tweets: loggedInUserTweets.concat(...followingUserTweet),
+    // });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+export const getFollowingTweets = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const loginUser = await User.findById(id);
+    const followingUserTweet =
+      loginUser.following.length > 0
+        ? await Promise.all(
+            loginUser.following.map((otherUsersId) => {
+              return Tweet.find({ userId: otherUsersId });
+            })
+          )
+        : [];
+
+    return res.status(200).json({
+      tweets: [].concat(...followingUserTweet),
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
