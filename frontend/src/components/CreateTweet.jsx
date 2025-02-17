@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from 'react-avatar';
 import { Image } from 'lucide-react';
+import { aw } from 'framer-motion/dist/types.d-CdW9auKD';
+import axios from 'axios';
 
 const CreateTweet = () => {
+  const [description, setDescription] = useState("");
+  const submitHandler = (e)  => {
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/tweet/create`,{description},{headers:})
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className="w-[100%]">
       <div className="">
@@ -26,6 +36,8 @@ const CreateTweet = () => {
           </div>
           <input
             type="text"
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="What is happening?!"
             className="w-full outline-none border-none text-xl ml-2"
           />
@@ -34,7 +46,7 @@ const CreateTweet = () => {
           <div>
             <Image size={"25px"} />
           </div>
-          <button className="px-4 bg-blue-500 hover:bg-blue-400 font-bold text-white py-2 border-none rounded-full text-right text-lg">
+          <button onClick={submitHandler} className="px-4 bg-blue-500 hover:bg-blue-400 font-bold text-white py-2 border-none rounded-full text-right text-lg">
             Tweet
           </button>
         </div>

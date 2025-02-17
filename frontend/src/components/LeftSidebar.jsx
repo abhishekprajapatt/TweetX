@@ -7,10 +7,11 @@ import { BookHeart } from 'lucide-react';
 import { LogOut } from 'lucide-react';
 import { Telescope } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
-  const profileId = "aapkijikiid"
+  const {user} = useSelector(store => store.user);
   return (
     <div className="w-[20%] mx-auto">
       <div className="">
@@ -27,7 +28,7 @@ const LeftSidebar = () => {
           <button onClick={() => navigate(`/`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
             <Bell className="text-xl" /> Notifications
           </button>
-          <button onClick={() => navigate(`/profile/${profileId}`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
+          <button onClick={() => navigate(`/profile/${user?._id}`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">
             <CircleUser  className="text-xl" /> Profile
           </button>
           <button onClick={() => navigate(`/`)} className="flex items-center my-2 hover:bg-gray-200 px-4 py-2 rounded-full cursor-pointer gap-2 font-bold text-xl w-full">

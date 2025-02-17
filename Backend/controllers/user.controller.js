@@ -72,6 +72,7 @@ export const login = async (req, res) => {
       .cookie('token', token, { expiresIn: '1d', httpOnly: true })
       .json({
         message: 'Login Successfully',
+        user,
         success: true,
       });
   } catch (error) {
@@ -157,6 +158,16 @@ export const getProfile = async (req, res) => {
   }
 };
 
+export const editProfile = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
 export const getOthersUsers = async (req, res) => {
   try {
     const id = req.params.id;

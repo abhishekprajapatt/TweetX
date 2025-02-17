@@ -1,10 +1,15 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar';
+import { useSelector } from 'react-redux';
+import useGetUserProfile from '@/hooks/useGetUserProfile';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { profile } = useSelector((store) => store.user);
+  useGetUserProfile(id);
   return (
     <div className="w-[50%] border-l border-r border-gray-200">
       <div>
@@ -13,8 +18,8 @@ const Profile = () => {
             <ArrowLeft onClick={() => navigate('/')} />
           </div>
           <div className="ml-2">
-            <h className="font-bold text-lg">Striver</h>
-            <p className="text-gray-500 text-sm">20 poxts</p>
+            <h className="font-bold text-lg">{profile?.name || 'username'}</h>
+            <p className="text-gray-500 text-sm">{'20 posts'}</p>
           </div>
         </div>
         <img
@@ -35,11 +40,14 @@ const Profile = () => {
           </button>
         </div>
         <div className="m-4">
-          <h1 className="font-bold text-xl">Striver</h1>
-          <p className="">striver532006@gmail.com</p>
+          <h1 className="font-bold text-xl">{profile?.name}</h1>
+          <p className="">{`@${profile?.username}`}</p>
         </div>
         <div className="m-4 text-sm">
-          <p className="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, soluta!</p>
+          <p className="">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
+            soluta!
+          </p>
         </div>
       </div>
     </div>

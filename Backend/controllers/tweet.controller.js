@@ -11,11 +11,12 @@ export const CreateTweet = async (req, res) => {
       });
     }
 
+    const user = await User.findById(id).select("-password");
     await Tweet.create({
       description,
       userId: id,
+      userDetails:user
     });
-
     return res.status(200).json({
       message: 'Tweet Created Successfully!',
       success: true,

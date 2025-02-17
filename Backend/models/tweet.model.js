@@ -10,14 +10,14 @@ const tweetSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    userId: { 
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    bookmarks: {
-      type: Array,
-      default: [],
+    userDetails:{
+      type:Array,
+      default:[],
     },
   },
   { timestamps: true }
