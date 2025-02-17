@@ -70,17 +70,17 @@ export const LikeOrDislike = async (req, res) => {
 
 export const getAllTweets = async (req, res) => {
   try {
-    const id = req.params.id;
-    const loggedInUser = await User.findById(id);
+    const id = req?.params?.id;
+    const loggedInUser = await User?.findById(id);
     if (!loggedInUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const loggedInUserTweets = await Tweet.find({ userId: id });
+    const loggedInUserTweets = await Tweet?.find({ userId: id });
     const followingUserTweet =
-      loggedInUser.following.length > 0
-        ? await Promise.all(
-            loggedInUser.following.map((otherUsersId) => {
-              return Tweet.find({ userId: otherUsersId });
+      loggedInUser?.following?.length > 0
+        ? await Promise?.all(
+            loggedInUser?.following?.map((otherUsersId) => {
+              return Tweet?.find({ userId: otherUsersId });
             })
           )
         : [];
@@ -103,13 +103,13 @@ export const getAllTweets = async (req, res) => {
 
 export const getFollowingTweets = async (req, res) => {
   try {
-    const id = req.params.id;
-    const loginUser = await User.findById(id);
+    const id = req?.params?.id;
+    const loginUser = await User?.findById(id);
     const followingUserTweet =
-      loginUser.following.length > 0
-        ? await Promise.all(
-            loginUser.following.map((otherUsersId) => {
-              return Tweet.find({ userId: otherUsersId });
+      loginUser?.following?.length > 0
+        ? await Promise?.all(
+            loginUser?.following?.map((otherUsersId) => {
+              return Tweet?.find({ userId: otherUsersId });
             })
           )
         : [];
