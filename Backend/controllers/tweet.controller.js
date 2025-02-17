@@ -11,11 +11,11 @@ export const CreateTweet = async (req, res) => {
       });
     }
 
-    const user = await User.findById(id).select("-password");
+    const user = await User.findById(id).select('-password');
     await Tweet.create({
       description,
       userId: id,
-      userDetails:user
+      userDetails: user,
     });
     return res.status(200).json({
       message: 'Tweet Created Successfully!',
@@ -29,24 +29,18 @@ export const CreateTweet = async (req, res) => {
     });
   }
 };
-
 export const DeleteTweet = async (req, res) => {
   try {
     const { id } = req.params;
     await Tweet.findByIdAndDelete(id);
     return res.status(200).json({
-      message: 'Tweet Deleted Successfully!',
+      message: 'Tweet deleted successfully.',
       success: true,
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
-      message: 'Server Error',
-      success: false,
-    });
   }
 };
-
 export const LikeOrDislike = async (req, res) => {
   try {
     const loginUserId = req.body.id;
@@ -92,6 +86,8 @@ export const getAllTweets = async (req, res) => {
         : [];
     return res.status(200).json({
       tweets: [...loggedInUserTweets, ...followingUserTweet.flat()],
+      message:"All tweets",
+      success:true
     });
     // return res.status(200).json({
     //   tweets: loggedInUserTweets.concat(...followingUserTweet),
@@ -120,6 +116,8 @@ export const getFollowingTweets = async (req, res) => {
 
     return res.status(200).json({
       tweets: [].concat(...followingUserTweet),
+      message:"following tweets",
+      success:true
     });
   } catch (error) {
     console.log(error);

@@ -1,10 +1,11 @@
 import { getAllTweets } from '@/redux/tweetSlice';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useGetUserTweets = (id) => {
   const dispatch = useDispatch();
+  const {refresh} = useSelector(store => store.tweet);
 
   useEffect(() => {
     const fetchUserTweets = async () => {
@@ -27,7 +28,7 @@ const useGetUserTweets = (id) => {
     };
 
     fetchUserTweets();
-  }, [id, dispatch]);
+  }, [id, dispatch,refresh]);
 
   return;
 };
