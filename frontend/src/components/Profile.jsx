@@ -2,14 +2,64 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useGetUserProfile from '@/hooks/useGetUserProfile';
+import toast from 'react-hot-toast';
+import { getfollowingUpdate } from '@/redux/userSlice';
+import axios from 'axios';
+import { getRefresh } from '@/redux/tweetSlice';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const { profile } = useSelector((store) => store.user);
+  const { user, profile } = useSelector((store) => store.user);
   useGetUserProfile(id);
+  const followOrUnfollowHandler = async () => {
+    if (user?.following?.includes(id)) {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/unfollow/${id}`,
+          {id:user?._id},
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          }
+        );
+        if(res?.data?.success){
+          dispatch(getfollowingUpdate(id));
+          dispatch(getRefresh());
+          toast?.success(res?.data?.message);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } else {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/follow/${id}`,
+          {id:user?._id},
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          }
+        );
+        if(res?.data?.success){
+          dispatch(getfollowingUpdate(id));
+          dispatch(getRefresh());
+          toast?.success(res?.data?.message);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    }
+  };
   return (
     <div className="w-[50%] border-l border-r border-gray-200">
       <div>
@@ -35,9 +85,18 @@ const Profile = () => {
           />
         </div>
         <div className="text-right m-4">
-          <button className="px-4 py-1 rounded-full border border-gray-400">
-            Edit Profile
-          </button>
+          {profile?._id === user?._id ? (
+            <button className="px-4 py-1 rounded-full border border-gray-400">
+              Edit Profile
+            </button>
+          ) : (
+            <button
+              onClick={followOrUnfollowHandler}
+              className="px-4 py-1 rounded-full border text-white bg-gray-800 hover:bg-gray-700 border-gray-400"
+            >
+              {user?.following?.includes(id) ? 'following' : 'follow'}
+            </button>
+          )}
         </div>
         <div className="m-4">
           <h1 className="font-bold text-xl">{profile?.name}</h1>

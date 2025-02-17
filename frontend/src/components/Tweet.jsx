@@ -53,6 +53,30 @@ const Tweet = ({ tweet }) => {
     }
   };
 
+  function timeSince(timestamp) {
+    let time = Date.parse(timestamp);
+    let now = Date.now();
+    let secondsPast = (now - time) / 1000;
+    let suffix = 'ago';
+
+    let intervals = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
+
+    for (let i in intervals) {
+      let interval = intervals[i];
+      if (secondsPast >= interval) {
+        let count = Math.floor(secondsPast / interval);
+        return `${count} ${i} ${count > 1 ? 's' : ''} ${suffix}`;
+      }
+    }
+  }
   return (
     <div className="border-b border-gray-200">
       <div>
@@ -65,7 +89,9 @@ const Tweet = ({ tweet }) => {
           <div className="ml-2 w-full">
             <div className="flex items-center">
               <h1 className="font-bold">{tweet?.userDetails[0]?.name}</h1>
-              <p className="text-gray-500 text-sm ml-2">{`@${tweet?.userDetails[0]?.username}. 1m`}</p>
+              <p className="text-gray-500 text-sm ml-2">{`@${
+                tweet?.userDetails[0]?.username
+              }. ${timeSince(tweet?.createdAt)}`}</p>
             </div>
             <div className="">
               <p className="">{tweet?.description}</p>
@@ -74,7 +100,9 @@ const Tweet = ({ tweet }) => {
               <div className="flex gap-2 items-center">
                 <div
                   onClick={() => likeOrDislikeHandler(tweet?._id)}
-                  className={`${tweet?.like && ('bg-blue-300')}cursor-pointer p-2 hover:bg-blue-200 rounded-full `} 
+                  className={`${
+                    tweet?.like && 'bg-blue-300'
+                  }cursor-pointer p-2 hover:bg-blue-200 rounded-full `}
                 >
                   <ThumbsUp size={'25px'} />
                 </div>

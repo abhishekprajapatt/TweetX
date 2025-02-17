@@ -8,7 +8,6 @@ const useOtherUsers = (id) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchUsers = async () => {
-      if(id) return ;
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/otherusers/${id}`,
