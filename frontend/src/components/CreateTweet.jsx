@@ -104,7 +104,7 @@ const CreateTweet = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="What is happening?!"
-            className="w-full outline-none border-none text-xl ml-2 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800"
+            className="w-full outline-none border-none text-xl ml-2 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 text-black"
           />
         </div>
         {preview && (
