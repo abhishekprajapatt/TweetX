@@ -9,8 +9,8 @@ const RightSidebar = () => {
   const navigate = useNavigate();
   console.log(otherUsers)
   return (
-    <div className="w-[25%] mx-auto">
-      <div className="flex items-center p-2 text-gray-600 bg-gray-100 rounded-full outline-none w-full">
+    <div className="hidden md:block w-[50%] mx-auto mt-4">
+      <div className="flex items-center p-2 text-gray-600 bg-gray-900 rounded-full outline-none w-full">
         <Search size="20px" />
         <input
           type="text"
@@ -18,7 +18,7 @@ const RightSidebar = () => {
           placeholder="Search"
         />
       </div>
-      <div className="my-4 p-4 bg-gray-100 rounded-2xl">
+      <div className="my-4 p-4 bg-slate-900 rounded-2xl">
         <h1 className="font-bold text-lg">Who to follow</h1>
         {otherUsers?.map((user) => {
           return (
@@ -39,7 +39,7 @@ const RightSidebar = () => {
                   <p className="text-sm">{`@${user?.username}`}</p>
                 </div>
               </div>
-              <button onClick={() => navigate(`/profile/${user?._id}`)} className="px-4 ml-[-4rem] py-1 mb-4 bg-black text-xs text-white rounded-full">
+              <button onClick={() => navigate(`/profile/${user?._id}`)} className="px-6 ml-[-4rem] py-2 mb-4 bg-black text-sm rounded-full">
                 Profile
               </button>
             </div>

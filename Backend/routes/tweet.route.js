@@ -1,10 +1,11 @@
 import express from 'express';
 import { CreateTweet, DeleteTweet, getAllTweets, getFollowingTweets, LikeOrDislike } from '../controllers/tweet.controller.js';
 import isAuthenticated from '../middlewares/isAuthenticated.js';
+import upload from '../utils/multer.js';
 
 const router = express.Router();
 
-router.route('/createtweet').post(isAuthenticated, CreateTweet);
+router.route('/createtweet').post(isAuthenticated, upload.single('image'), CreateTweet);
 router.route('/delete/:id').delete(isAuthenticated, DeleteTweet);
 router.route('/like/:id').put(isAuthenticated, LikeOrDislike);
 router.route('/alltweets/:id').get(isAuthenticated, getAllTweets);

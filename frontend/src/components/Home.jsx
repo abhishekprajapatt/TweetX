@@ -11,16 +11,11 @@ const Home = () => {
   const navigate = useNavigate();
   useOtherUsers(user?._id);
   useGetUserTweets(user?._id);
-  useEffect(() => {
-    if(!user){
-      navigate("/login");
-    }
-  },[user, navigate])
   return (
-    <div className="flex gap-4 justify-between w-[80%] mx-auto">
+    <div className="flex flex-col md:flex-row gap-4 justify-between md:w-[90%] mx-auto">
       <LeftSidebar />
       <Outlet/>
-      <RightSidebar />
+      <RightSidebar/>
     </div>
   );
 };

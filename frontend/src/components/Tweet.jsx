@@ -77,6 +77,8 @@ const Tweet = ({ tweet }) => {
       }
     }
   }
+
+  console.log('all tweets ', tweet);
   return (
     <div className="border-b border-gray-200">
       <div>
@@ -93,9 +95,10 @@ const Tweet = ({ tweet }) => {
                 tweet?.userDetails[0]?.username
               }. ${timeSince(tweet?.createdAt)}`}</p>
             </div>
-            <div className="">
+            <div className="my-4">
               <p className="">{tweet?.description}</p>
             </div>
+            <img className="w-full rounded-2xl" src={tweet?.image} />
             <div className="flex items-center justify-between my-4">
               <div className="flex gap-2 items-center">
                 <div

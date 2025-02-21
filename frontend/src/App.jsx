@@ -1,30 +1,46 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Toaster from "react-hot-toast"
 import Login from './components/Login';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Feed from './components/Feed';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 const App = () => {
   const appRouter = createBrowserRouter([
     {
       path: '/',
-      element: <Home />,
+      element: (
+        <ProtectedRoutes>
+          <Home />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           path: '/',
-          element: <Feed />,
+          element: (
+            <ProtectedRoutes>
+              <Feed />
+            </ProtectedRoutes>
+          ),
         },
         {
           path: '/profile/:id',
-          element: <Profile />,
+          element: (
+            <ProtectedRoutes>
+              <Profile />
+            </ProtectedRoutes>
+          ),
         },
       ],
     },
     {
       path: '/login',
-      element: <Login />,
+      element: (
+        <ProtectedRoutes>
+          <Login />
+        </ProtectedRoutes>
+      ),
     },
   ]);
   return (

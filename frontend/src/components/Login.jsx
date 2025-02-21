@@ -94,15 +94,15 @@ const Login = () => {
   // }, []);
   return (
     <div className="w-screen h-screen flex items-center justify-center">
-      <div className="flex items-center justify-evenly w-[80%]">
+      <div className="md:flex items-center justify-evenly w-[80%]">
         <div>
-          <img width={'250px'} src={Logo} alt="twitter logo" className="" />
+          <img src={Logo} alt="twitter logo" className="w-20 md:w-[250px] mx-20 md:mx-auto" />
         </div>
         <div className="">
           <div className="my-5">
-            <h1 className="font-bold text-5xl">Happening now</h1>
+            <h1 className="font-bold text-3xl md:text-5xl">Happening now</h1>
           </div>
-          <h1 className="font-bold text-xl font-serif text-gray-600 my-4">
+          <h1 className="font-bold text-xl font-serif text-gray-700 my-4">
             {isLogin ? 'Login' : 'Singup'}
           </h1>
           <form

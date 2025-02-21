@@ -102,6 +102,7 @@ export const logout = async (req, res) => {
   }
 };
 
+
 export const bookmarks = async (req, res) => {
   try {
     const loginUserId = req.body.id;
@@ -135,6 +136,50 @@ export const bookmarks = async (req, res) => {
   }
 };
 
+
+export const editProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, username, bio, profilePicture, bannerPicture } = req.body;
+    
+    if (!userId) {
+      return res.status(400).json({
+        message: 'User ID is required',
+        success: false,
+      });
+    }
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+        success: false,
+      });
+    }
+    
+    if (name) user.name = name;
+    if (username) user.username = username;
+    if (bio) user.bio = bio;
+    if (profilePicture) user.profilePicture = profilePicture;
+    if (bannerPicture) user.bannerPicture = bannerPicture;
+    
+    await user.save();
+    
+    return res.status(200).json({
+      message: 'Profile updated successfully',
+      success: true,
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Server Error',
+      success: false,
+    });
+  }
+};
+
+
 export const getProfile = async (req, res) => {
   try {
     const id = req.params.id;
@@ -158,16 +203,6 @@ export const getProfile = async (req, res) => {
   }
 };
 
-export const editProfile = async (req, res) => {
-  try {
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: 'Server Error',
-      success: false,
-    });
-  }
-};
 export const getOthersUsers = async (req, res) => {
   try {
     const id = req.params.id;

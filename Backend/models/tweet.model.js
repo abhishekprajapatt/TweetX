@@ -6,6 +6,7 @@ const tweetSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: { type: String },
     like: {
       type: Array,
       default: [],
@@ -15,9 +16,9 @@ const tweetSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    userDetails:{
-      type:Array,
-      default:[],
+    userDetails: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }

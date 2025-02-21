@@ -8,17 +8,34 @@ import { getAllTweets, getIsActive, getRefresh } from '@/redux/tweetSlice';
 
 const CreateTweet = () => {
   const [description, setDescription] = useState('');
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
   const { isActive } = useSelector((store) => store.tweet);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   const submitHandler = async () => {
     try {
+      const formData = new FormData();
+      formData.append('description', description);
+      formData.append('id', user?._id);
+      if (image) {
+        formData.append('image', image);
+      }
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/tweet/createtweet`,
-        { description, id: user?._id },
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
           withCredentials: true,
         }
@@ -32,6 +49,8 @@ const CreateTweet = () => {
       toast.error(error.response.data.message);
     }
     setDescription('');
+    setImage(null);
+    setPreview(null);
   };
 
   const activeYouHandler = () => {
@@ -49,16 +68,20 @@ const CreateTweet = () => {
           <button
             onClick={activeYouHandler}
             className={`${
-              isActive ? 'border-b-4 border-b-blue-600 text-right' : 'border-b-4'
-            }cursor-pointer hover:bg-gray-200 w-full text-center p-2 rounded-sm`}
+              isActive
+                ? 'border-b-4 border-b-blue-600 text-right'
+                : 'border-b-4'
+            }cursor-pointer hover:bg-gray-800 w-full text-center p-2 rounded-sm`}
           >
             <h1 className="font-bold text-gray-600 text-xl">For You</h1>
           </button>
           <button
             onClick={activeFollowingHandler}
             className={`${
-              !isActive ? 'border-b-4 border-b-blue-600 text-right' : 'border-b-4'
-            }cursor-pointer hover:bg-gray-200 w-full text-center p-2 rounded-sm`}
+              !isActive
+                ? 'border-b-4 border-b-blue-600 text-right'
+                : 'border-b-4'
+            }cursor-pointer hover:bg-gray-800 w-full text-center p-2 rounded-sm`}
           >
             <h1 className="font-bold text-gray-600 text-xl">Following</h1>
           </button>
@@ -68,7 +91,10 @@ const CreateTweet = () => {
         <div className="flex items-center p-4">
           <div className="">
             <Avatar
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9dEhbjgmjNQc_JAJJYvv4waAPpHilh4Ps8A&s"
+              src={
+                user?.avatar ||
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9dEhbjgmjNQc_JAJJYvv4waAPpHilh4Ps8A&s'
+              }
               size="50"
               round={true}
             />
@@ -78,16 +104,30 @@ const CreateTweet = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="What is happening?!"
-            className="w-full outline-none border-none text-xl ml-2"
+            className="w-full outline-none border-none text-xl ml-2 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800"
           />
         </div>
+        {preview && (
+          <div className="p-4">
+            <img src={preview} alt="Preview" className="w-full rounded-lg" />
+          </div>
+        )}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div>
-            <Image size={'25px'} />
+            <label htmlFor="imageUpload" className="cursor-pointer">
+              <Image size={'25px'} />
+            </label>
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
           </div>
           <button
             onClick={submitHandler}
-            className="px-4 bg-blue-500 hover:bg-blue-400 font-bold text-white py-2 border-none rounded-full text-right text-lg"
+            className="px-4 bg-gray-900 hover:bg-gray-800 font-bold text-white py-2 border-none rounded-full text-right text-lg"
           >
             Tweet
           </button>
