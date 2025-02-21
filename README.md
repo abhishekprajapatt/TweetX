@@ -37,8 +37,8 @@ TweetX is fully deployed on **Render**, ensuring smooth performance and accessib
 **Live Project Link:** [Your Deployment Link Here]
 
 ## Project Screenshots
-![image](https://github.com/user-attachments/assets/fa2c39ff-7c4a-4855-86dd-44ba29d2e983)
 ![image](https://github.com/user-attachments/assets/a6962b0e-46c6-40fe-afb0-f75040e5dd50)
+![image](https://github.com/user-attachments/assets/fa2c39ff-7c4a-4855-86dd-44ba29d2e983)
 ![Screenshot 2025-02-21 160533](https://github.com/user-attachments/assets/1f2bb6fb-925b-4dd9-b23f-1bf5d6cb659b)
 
 
