@@ -117,7 +117,7 @@ const Login = () => {
                   value={input.name}
                   onChange={changeEventHandler}
                   placeholder="Enter Your Name"
-                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full"
+                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
                 />
                 <input
                   type="text"
@@ -125,7 +125,7 @@ const Login = () => {
                   value={input.username}
                   onChange={changeEventHandler}
                   placeholder="Enter Your Username"
-                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full"
+                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
                 />
               </>
             )}
@@ -135,7 +135,7 @@ const Login = () => {
               value={input.email}
               onChange={changeEventHandler}
               placeholder="Enter Your Email"
-              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full"
+              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
             />
             <input
               type="password"
@@ -143,7 +143,7 @@ const Login = () => {
               value={input.password}
               onChange={changeEventHandler}
               placeholder="Enter Your Password"
-              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full"
+              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
             />
             <button className="px-4 py-2 border-none text-md bg-blue-500 hover:bg-blue-400 rounded-full font-bold w-full text-white">
               {loading ? (
