@@ -57,7 +57,7 @@ const LeftSidebar = () => {
           <img
             src={Logo}
             alt="twitter logo"
-            className="flex items-center justify-center w-[30px] mt-2 md:hidden w-full "
+            className="flex items-center justify-center w-[12rem] mt-2 md:hidden w-full "
           />
           <div className="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 flex md:py-4 md:flex-col shadow-lg md:shadow-sm shadow-gray-400 md:shadow-sm px-2 fixed left-0 md:relative bottom-0 gap-1 border-b border-gray-300 w-full md:top-0 md:max-w-80 md:h-screen">
             <div className="flex items-center space-x-2 hidden md:block">
