@@ -11,6 +11,7 @@ const Home = () => {
   const navigate = useNavigate();
   useOtherUsers(user?._id);
   useGetUserTweets(user?._id);
+  console.log('User',user)
   return (
     <div className="flex flex-col md:flex-row gap-4 justify-between md:w-[90%] mx-auto">
       <LeftSidebar />

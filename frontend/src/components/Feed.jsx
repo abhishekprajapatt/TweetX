@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Feed = () => {
   const { tweets } = useSelector((store) => store.tweet);
+  console.log('tweets',tweets)
   return (
     <div className="w-[100%] mx-auto border border-gray-200">
       <div className="">

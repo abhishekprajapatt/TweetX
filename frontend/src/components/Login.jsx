@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '../assets/logo.png';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ import { getUser } from '@/redux/userSlice';
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoding] = useState(false);
+  const {user} = useSelector(store => store?.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
@@ -87,11 +88,11 @@ const Login = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate('/home');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      navigate('/home');
+    }
+  }, []);
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <div className="md:flex items-center justify-evenly w-[80%]">
@@ -117,7 +118,7 @@ const Login = () => {
                   value={input.name}
                   onChange={changeEventHandler}
                   placeholder="Enter Your Name"
-                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
+                  className="outline-blue-600 border text-black border-gray-600 px-4 py-2 rounded-full"
                 />
                 <input
                   type="text"
@@ -125,7 +126,7 @@ const Login = () => {
                   value={input.username}
                   onChange={changeEventHandler}
                   placeholder="Enter Your Username"
-                  className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
+                  className="outline-blue-600 border text-black border-gray-600 px-4 py-2 rounded-full"
                 />
               </>
             )}
@@ -135,7 +136,7 @@ const Login = () => {
               value={input.email}
               onChange={changeEventHandler}
               placeholder="Enter Your Email"
-              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
+              className="outline-blue-600 border text-black border-gray-600 px-4 py-2 rounded-full"
             />
             <input
               type="password"
@@ -143,7 +144,7 @@ const Login = () => {
               value={input.password}
               onChange={changeEventHandler}
               placeholder="Enter Your Password"
-              className="outline-blue-600 border border-gray-600 px-4 py-2 rounded-full text-black"
+              className="outline-blue-600 border text-black border-gray-600 px-4 py-2 rounded-full"
             />
             <button className="px-4 py-2 border-none text-md bg-blue-500 hover:bg-blue-400 rounded-full font-bold w-full text-white">
               {loading ? (
