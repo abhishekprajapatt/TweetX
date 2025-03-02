@@ -28,6 +28,7 @@ const LeftSidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
+  
   const logoutHandler = async () => {
     try {
       const res = await axios.get(

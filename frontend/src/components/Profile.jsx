@@ -115,7 +115,7 @@ const Profile = () => {
       toast.error(error.response.data.message);
     }
   };
-  
+
   function timeSince(timestamp) {
     let time = Date.parse(timestamp);
     let now = Date.now();
@@ -224,13 +224,9 @@ const Profile = () => {
                         @{userDetails?.[0]?.username} · {timeSince(createdAt)}
                       </p>
                     </div>
-
-                    {/* Tweet Description */}
                     <div className="my-3">
                       <p>{description}</p>
                     </div>
-
-                    {/* Tweet Image (if exists) */}
                     {image && (
                       <img
                         className="w-full rounded-2xl"
@@ -238,10 +234,7 @@ const Profile = () => {
                         alt="Tweet"
                       />
                     )}
-
-                    {/* Tweet Actions */}
                     <div className="flex items-center justify-between mt-4">
-                      {/* Like Button */}
                       <div className="flex gap-2 items-center">
                         <div
                           onClick={() => likeOrDislikeHandler(_id)}
@@ -253,24 +246,18 @@ const Profile = () => {
                         </div>
                         <p>{like?.length || 0}</p>
                       </div>
-
-                      {/* Comment Button */}
                       <div className="flex gap-2 items-center">
                         <div className="cursor-pointer p-2 hover:bg-blue-200 rounded-full">
                           <MessageSquareMore size={'25px'} />
                         </div>
                         <p>{comment?.length || 0}</p>
                       </div>
-
-                      {/* Bookmark Button */}
                       <div className="flex gap-2 items-center">
                         <div className="cursor-pointer p-2 hover:bg-green-200 rounded-full">
                           <BookMarked size={'25px'} />
                         </div>
                         <p>{bookmarks?.length || 0}</p>
                       </div>
-
-                      {/* Delete Button (only if the user owns the tweet) */}
                       {user?._id === userId && (
                         <div
                           onClick={() => deleteTweetHandler(_id)}
