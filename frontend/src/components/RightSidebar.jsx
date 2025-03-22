@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const RightSidebar = () => {
-  const { otherUsers } = useSelector((store) => store?.user);
+  const { otherUsers } = useSelector((store) => store?.user || {});
   const navigate = useNavigate();
+  if(!otherUsers) return <h1>Loading...!</h1>
   console.log(otherUsers)
   return (
     <div className="hidden md:block w-[50%] mx-auto mt-4">
@@ -20,7 +21,7 @@ const RightSidebar = () => {
       </div>
       <div className="my-4 p-4 bg-slate-900 rounded-2xl">
         <h1 className="font-bold text-lg">Who to follow</h1>
-        {otherUsers?.map((user) => {
+        {otherUsers.map((user) => {
           return (
             <div
               key={user?._id}
