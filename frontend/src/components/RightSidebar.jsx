@@ -21,7 +21,7 @@ const RightSidebar = () => {
       </div>
       <div className="my-4 p-4 bg-slate-900 rounded-2xl">
         <h1 className="font-bold text-lg">Who to follow</h1>
-        {otherUsers.map((user) => {
+        {Array.isArray(otherUsers) && otherUsers?.map((user) => {
           return (
             <div
               key={user?._id}
